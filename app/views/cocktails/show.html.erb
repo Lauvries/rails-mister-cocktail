@@ -1,11 +1,14 @@
 <h1><%= @cocktail.name %></h1>
 
-<% @cocktail.ingredients.each do |ingredient| %>
+<% @cocktail.doses.each do |dose| %>
   <li>
-    <%= ingredient.name %>
+    <%= dose.ingredient.name %> | <em><%= dose.description %></em> |
+    <%= link_to "destroy", dose_path(dose), class: "btn btn-danger", method: "delete"  %>
   </li>
-
-
-
 <% end %>
 
+<%= simple_form_for [@cocktail, @dose] do |t| %>
+  <%= t.input :description, label: "How much liquor?" %>
+  <%= t.association :ingredient %>
+  <%= t.submit "Add ingredient", class: "btn btn-danger" %>
+<% end %>
